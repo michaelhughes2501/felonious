@@ -1,0 +1,25 @@
+# Node
+node_modules/
+frontend/dist/
+frontend/.env
+backend-node/.env
+
+# Python
+backend-flask/venv/
+__pycache__/
+*.pyc
+*.pyo
+backend-flask/.env
+
+# Environment — NEVER commit real credentials
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vite
+dist/
+dist-ssr/
+*.local
