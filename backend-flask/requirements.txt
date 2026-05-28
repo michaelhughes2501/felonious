@@ -1,4 +1,4 @@
-flask
-flask-cors
-mysql-connector-python
-python-dotenv
+flask>=3.0
+flask-cors>=5.0
+mysql-connector-python>=9.0
+python-dotenv>=1.0
