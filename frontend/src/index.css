@@ -5,19 +5,20 @@
 }
 
 :root {
-  --bg: #0d0d0d;
-  --card: #161616;
-  --border: #2a2a2a;
-  --accent: #c8a84b;
-  --accent2: #4b8fc8;
-  --danger: #c84b4b;
-  --success: #4bc87a;
-  --text: #e8e8e8;
-  --muted: #888;
+  --bg: #fafafa;
+  --card: #ffffff;
+  --border: #d7d9e2;
+  --accent: #1a237e;
+  --accent2: #4caf50;
+  --danger: #c62828;
+  --success: #2e7d32;
+  --warning: #ff9800;
+  --text: #1d2433;
+  --muted: #5f6673;
 }
 
 body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Open Sans', 'Segoe UI', system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -27,7 +28,7 @@ a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 nav {
-  background: #111;
+  background: #ffffff;
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 1.5rem;
   display: flex;
@@ -70,16 +71,16 @@ nav a:hover, nav a.active { color: var(--text); text-decoration: none; }
   letter-spacing: 0.5px;
 }
 
-.tag-housing  { background: #1a3a2a; color: #4bc87a; }
-.tag-jobs     { background: #1a2a3a; color: #4b8fc8; }
-.tag-mental_health { background: #2a1a3a; color: #a84bc8; }
-.tag-legal    { background: #3a2a1a; color: #c8834b; }
-.tag-general  { background: #2a2a2a; color: #888; }
+.tag-housing  { background: #e8f5e9; color: #2e7d32; }
+.tag-jobs     { background: #e8f5e9; color: #2e7d32; }
+.tag-mental_health { background: #fff3e0; color: #b26a00; }
+.tag-legal    { background: #e8eaf6; color: #1a237e; }
+.tag-general  { background: #eeeeee; color: #555; }
 
 input, textarea, select {
   width: 100%;
   padding: 0.5rem 0.75rem;
-  background: #1a1a1a;
+  background: #ffffff;
   border: 1px solid var(--border);
   border-radius: 5px;
   color: var(--text);
@@ -100,10 +101,10 @@ textarea { resize: vertical; min-height: 80px; }
   transition: opacity 0.2s;
 }
 .btn:hover { opacity: 0.85; }
-.btn-primary { background: var(--accent); color: #000; }
-.btn-secondary { background: #333; color: var(--text); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-secondary { background: #eceff5; color: var(--text); }
 .btn-danger { background: var(--danger); color: #fff; }
-.btn-success { background: var(--success); color: #000; }
+.btn-success { background: var(--success); color: #fff; }
 
 .form-group { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
 .form-row { display: flex; gap: 0.75rem; }
@@ -141,4 +142,130 @@ textarea { resize: vertical; min-height: 80px; }
 .filter-btn:hover, .filter-btn.active {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.clerk-page {
+  max-width: 1100px;
+}
+
+.clerk-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.clerk-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.8fr);
+  gap: 1rem;
+}
+
+.chat-panel,
+.event-panel {
+  margin-bottom: 0;
+}
+
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 320px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.chat-bubble {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.chat-bubble.assistant {
+  background: #f3f5ff;
+  border-color: #c7ccef;
+}
+
+.chat-bubble.resident {
+  background: #f1f8f2;
+  border-color: #c7e4ca;
+  margin-left: 2rem;
+}
+
+.chat-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.starter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.chat-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.chat-form textarea {
+  min-height: 64px;
+}
+
+.event-item {
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+}
+
+.event-item:last-child {
+  border-bottom: 0;
+}
+
+.priority {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.priority-high {
+  background: #ffebee;
+  color: var(--danger);
+}
+
+.priority-medium {
+  background: #fff3e0;
+  color: #9a5b00;
+}
+
+.clerk-note {
+  margin-top: 1rem;
+}
+
+@media (max-width: 820px) {
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .clerk-layout,
+  .chat-form {
+    grid-template-columns: 1fr;
+  }
+
+  .chat-bubble.resident {
+    margin-left: 0;
+  }
 }
