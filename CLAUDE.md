@@ -8,7 +8,7 @@ Guidance for Claude Code (and humans) when working in this repository.
 
 - **Resource Kits** — curated assistance programs by category (housing, jobs, mental_health, legal, general) and location
 - **Connects** — short profiles that let recently-released folks find peers in their area
-- **Items** — generic resource items served by the Flask backend
+- **Items** — generic resource items served by both backends (`/api/items`)
 
 The repo intentionally keeps **two parallel backend implementations** (Flask and Node/Express) over the same MySQL schema as a learning/comparison artifact.
 
