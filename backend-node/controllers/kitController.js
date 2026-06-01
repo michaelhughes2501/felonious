@@ -47,7 +47,7 @@ const kitController = {
     try {
       const affected = await KitModel.delete(req.params.id)
       if (!affected) return res.status(404).json({ error: 'Kit not found' })
-      res.json({ message: 'Kit dropped' })
+      res.json({ message: 'Resource removed' })
     } catch (err) {
       res.status(500).json({ error: err.message })
     }

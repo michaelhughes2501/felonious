@@ -13,7 +13,7 @@ function Connects() {
   const load = () =>
     connectService.getAll()
       .then(setConnects)
-      .catch(() => setError('Failed to load connects'))
+      .catch(() => setError('Failed to load Cellmates'))
 
   useEffect(() => { load() }, [])
 
@@ -48,24 +48,24 @@ function Connects() {
     if (!dateStr) return null
     const diff = Math.floor((Date.now() - new Date(dateStr)) / 86400000)
     if (diff < 1) return 'Today'
-    if (diff < 30) return `${diff}d out`
-    if (diff < 365) return `${Math.floor(diff / 30)}mo out`
-    return `${Math.floor(diff / 365)}yr out`
+    if (diff < 30) return `${diff}d since Release Date`
+    if (diff < 365) return `${Math.floor(diff / 30)}mo since Release Date`
+    return `${Math.floor(diff / 365)}yr since Release Date`
   }
 
   return (
     <div className="page">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h2 className="section-title" style={{ border: 'none', margin: 0 }}>Connects</h2>
+        <h2 className="section-title" style={{ border: 'none', margin: 0 }}>Cellmates</h2>
         <button className="btn btn-primary" onClick={() => { cancel(); setShowForm(s => !s) }}>
-          {showForm && !editing ? 'Cancel' : '+ Post Your Info'}
+          {showForm && !editing ? 'Cancel' : '+ Add Profile'}
         </button>
       </div>
 
       {showForm && (
         <div className="card" style={{ marginBottom: '1.5rem', borderColor: 'var(--accent2)' }}>
-          <div className="section-title" style={{ color: 'var(--accent2)' }}>{editing ? 'Update Your Info' : 'Drop Your Info'}</div>
-          <p className="muted" style={{ marginBottom: '1rem' }}>Let people in your area know you're out and looking to link up.</p>
+          <div className="section-title" style={{ color: 'var(--accent2)' }}>{editing ? 'Update Profile' : 'Add Resident Profile'}</div>
+          <p className="muted" style={{ marginBottom: '1rem' }}>Share only information approved for supervised peer connection.</p>
           {error && <p className="error">{error}</p>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -75,14 +75,14 @@ function Connects() {
               </div>
               <div className="form-row">
                 <div>
-                  <label className="muted" style={{ fontSize: '0.8rem', marginBottom: '0.3rem', display: 'block' }}>Release date (optional)</label>
+                  <label className="muted" style={{ fontSize: '0.8rem', marginBottom: '0.3rem', display: 'block' }}>Release Date (optional)</label>
                   <input type="date" value={form.released_date} onChange={e => setForm(f => ({ ...f, released_date: e.target.value }))} />
                 </div>
                 <input placeholder="Contact info (DM, email, etc.)" value={form.contact} onChange={e => setForm(f => ({ ...f, contact: e.target.value }))} />
               </div>
-              <textarea placeholder="Bio — what you need, what you're about, what you're looking for" value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))} />
+              <textarea placeholder="Profile summary, goals, support needs, and approved connection preferences" value={form.bio} onChange={e => setForm(f => ({ ...f, bio: e.target.value }))} />
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <button type="submit" className="btn btn-primary">{editing ? 'Update' : 'Post It'}</button>
+                <button type="submit" className="btn btn-primary">{editing ? 'Update' : 'Submit'}</button>
                 <button type="button" className="btn btn-secondary" onClick={cancel}>Cancel</button>
               </div>
             </div>
@@ -91,7 +91,7 @@ function Connects() {
       )}
 
       {!showForm && error && <p className="error">{error}</p>}
-      {connects.length === 0 && <p className="muted">Nobody posted up yet. Be the first to drop your info.</p>}
+      {connects.length === 0 && <p className="muted">No approved Cellmate profiles are available yet.</p>}
 
       {connects.map(c => (
         <div key={c.id} className="card">
@@ -99,15 +99,15 @@ function Connects() {
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.3rem' }}>
                 <strong style={{ fontSize: '1.1rem', color: 'var(--accent2)' }}>{c.handle}</strong>
-                {c.location && <span className="muted" style={{ fontSize: '0.85rem' }}>📍 {c.location}</span>}
+                {c.location && <span className="muted" style={{ fontSize: '0.85rem' }}>{c.location}</span>}
                 {c.released_date && (
                   <span className="tag" style={{ background: '#1a2a1a', color: 'var(--success)' }}>
-                    🔓 {daysSince(c.released_date)}
+                    {daysSince(c.released_date)}
                   </span>
                 )}
               </div>
               {c.bio && <p style={{ marginBottom: '0.4rem', lineHeight: 1.5 }}>{c.bio}</p>}
-              {c.contact && <p className="muted" style={{ fontSize: '0.85rem' }}>📬 {c.contact}</p>}
+              {c.contact && <p className="muted" style={{ fontSize: '0.85rem' }}>Contact: {c.contact}</p>}
             </div>
             <div style={{ display: 'flex', gap: '0.4rem' }}>
               <button className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.3rem 0.6rem' }} onClick={() => startEdit(c)}>Edit</button>

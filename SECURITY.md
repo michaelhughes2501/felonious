@@ -1,21 +1,30 @@
 # Security Policy
 
+Felonious is intended to handle sensitive resident, supervision, communication, and resource data. Treat all security issues as high priority.
+
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+The project is pre-release. Security fixes should target the default branch until versioned releases are introduced.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported |
+| --- | --- |
+| `master` | Yes |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Do not open public issues for vulnerabilities involving authentication, authorization, private communications, moderation bypasses, resident data exposure, or dependency exploits.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Report privately to the repository owner. Include:
+
+- A clear summary of the issue.
+- Steps to reproduce.
+- Affected files, routes, or dependencies.
+- Any known impact on resident, staff, or moderation data.
+
+## Security Baseline
+
+- Never commit `.env` files, tokens, database credentials, or API keys.
+- Keep database fields and logs clinically neutral.
+- Use role-based access controls for Resident, PO, CO, Captain, and Warden workflows.
+- Log moderation and administrative actions with enough context for audit review.
+- Add tests for authorization, moderation, and safety-sensitive behavior before shipping those modules.
