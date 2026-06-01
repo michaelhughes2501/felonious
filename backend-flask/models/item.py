@@ -1,4 +1,5 @@
 from config.db import get_db
+from debug_logging import debug_log
 
 
 class ItemModel:
@@ -6,11 +7,29 @@ class ItemModel:
     def get_all():
         db = get_db()
         cursor = db.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM items ORDER BY created_at DESC")
-        rows = cursor.fetchall()
-        cursor.close()
-        db.close()
-        return rows
+        try:
+            cursor.execute("SELECT * FROM items ORDER BY created_at DESC")
+            rows = cursor.fetchall()
+            debug_log(
+                hypothesis_id="H_SCHEMA_MISSING",
+                location="backend-flask/models/item.py:get_all",
+                message="get_all query succeeded",
+                data={"rowCount": len(rows)},
+                run_id="pre-fix",
+            )
+            return rows
+        except Exception as e:
+            debug_log(
+                hypothesis_id="H_SCHEMA_MISSING",
+                location="backend-flask/models/item.py:get_all",
+                message="get_all query failed",
+                data={"errorType": type(e).__name__, "errorMessage": str(e)},
+                run_id="pre-fix",
+            )
+            raise
+        finally:
+            cursor.close()
+            db.close()
 
     @staticmethod
     def get_by_id(item_id):

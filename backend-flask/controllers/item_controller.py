@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from models.item import ItemModel
+from debug_logging import debug_log
 
 
 def get_all_items():
@@ -16,6 +17,17 @@ def get_item(item_id):
 
 def create_item():
     data = request.get_json()
+    debug_log(
+        hypothesis_id="H_REQUEST_JSON",
+        location="backend-flask/controllers/item_controller.py:create_item",
+        message="create_item received JSON",
+        data={
+            "hasJson": bool(data),
+            "hasName": bool(data and data.get("name")),
+            "nameLength": len(data.get("name")) if data and data.get("name") else 0,
+        },
+        run_id="pre-fix",
+    )
     if not data or not data.get("name"):
         return jsonify({"error": "name is required"}), 400
     item_id = ItemModel.create(data["name"], data.get("description", ""))
@@ -24,6 +36,18 @@ def create_item():
 
 def update_item(item_id):
     data = request.get_json()
+    debug_log(
+        hypothesis_id="H_REQUEST_JSON",
+        location="backend-flask/controllers/item_controller.py:update_item",
+        message="update_item received JSON",
+        data={
+            "itemId": item_id,
+            "hasJson": bool(data),
+            "hasName": bool(data and data.get("name")),
+            "nameLength": len(data.get("name")) if data and data.get("name") else 0,
+        },
+        run_id="pre-fix",
+    )
     if not data or not data.get("name"):
         return jsonify({"error": "name is required"}), 400
     affected = ItemModel.update(item_id, data["name"], data.get("description", ""))
