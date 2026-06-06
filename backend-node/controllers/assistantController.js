@@ -86,10 +86,12 @@ function buildAssistantReply(message) {
 
 const assistantController = {
   async getEvents(req, res) {
+    const residentId = req.body?.resident_id || 'current'
+
     res.json({
       success: true,
       data: {
-        resident_id: req.query.resident_id || 'current',
+        resident_id: residentId,
         events: eventSchedule,
       },
       meta: {
