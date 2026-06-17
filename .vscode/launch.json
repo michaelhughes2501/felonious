@@ -13,12 +13,10 @@
     },
     {
       "name": "React Frontend",
-      "type": "node",
+      "type": "chrome",
       "request": "launch",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "cwd": "${workspaceFolder}/frontend",
-      "console": "integratedTerminal"
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend"
     }
   ],
   "compounds": [
