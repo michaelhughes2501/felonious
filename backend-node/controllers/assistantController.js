@@ -149,10 +149,12 @@ async function callClaude(message) {
 // ─── Controller ───────────────────────────────────────────────────────────────
 const assistantController = {
   async getEvents(req, res) {
+    const residentId = req.body?.resident_id || 'current'
+
     res.json({
       success: true,
       data: {
-        resident_id: req.query.resident_id || 'current',
+        resident_id: residentId,
         events: eventSchedule,
       },
       meta: { request_id: `req_${Date.now()}`, timestamp: new Date().toISOString(), version: 'v1' },
