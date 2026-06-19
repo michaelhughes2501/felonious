@@ -1,0 +1,22 @@
+{
+  "name": "felonious",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend-node",
+    "frontend"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "install:all": "npm install --workspaces && pip install -r backend-flask/requirements.txt",
+    "dev:node": "npm run dev --workspace=backend-node",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "start:node": "npm start --workspace=backend-node",
+    "start:flask": "python backend-flask/app.py",
+    "seed": "node database/seed.js"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "mysql2": "^3.22.4"
+  }
+}

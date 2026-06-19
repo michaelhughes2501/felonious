@@ -16,10 +16,15 @@ app.get('/api/health', (req, res) => {
 })
 
 // API routes
+app.use(require('./routes/auth'))
 app.use(require('./routes/kits'))
 app.use(require('./routes/connects'))
 app.use(require('./routes/assistant'))
 app.use(require('./routes/items'))
+
+// Ensure residents table exists (runs async, non-blocking)
+const Resident = require('./models/Resident')
+Resident.ensureTable().catch(err => console.warn('Could not create residents table:', err.message))
 
 // Serve built React frontend in production (public/ exists after `npm run build`)
 const publicDir = path.join(__dirname, 'public')
