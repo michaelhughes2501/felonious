@@ -1,6 +1,15 @@
 CREATE DATABASE IF NOT EXISTS `felonious`;
 USE `felonious`;
 
+-- Generic items table (used by items API)
+CREATE TABLE IF NOT EXISTS items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Resource records: housing, employment, wellness, legal, and general support by location
 CREATE TABLE IF NOT EXISTS kits (
   id INT AUTO_INCREMENT PRIMARY KEY,
