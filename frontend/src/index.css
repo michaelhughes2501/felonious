@@ -1,0 +1,25 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  background: #f7f8fa;
+  color: #1f2328;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+main {
+  min-height: calc(100vh - 56px);
+}
+
+a {
+  color: #3b82d4;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

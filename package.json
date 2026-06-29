@@ -16,7 +16,8 @@
     "seed": "node database/seed.js"
   },
   "devDependencies": {
-    "dotenv": "^17.4.2",
-    "mysql2": "^3.22.4"
+    "dotenv": "^16.5.0",
+    "esbuild": "^0.28.1",
+    "mysql2": "^3.14.0"
   }
 }
