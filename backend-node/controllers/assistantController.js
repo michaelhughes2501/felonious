@@ -94,8 +94,8 @@ function getAnthropicClient() {
   const key = process.env.ANTHROPIC_API_KEY
   if (!key) return null
   try {
-    const Anthropic = require('@anthropic-ai/sdk')
-    _anthropic = new Anthropic.default({ apiKey: key })
+    const { default: Anthropic } = require('@anthropic-ai/sdk')
+    _anthropic = new Anthropic({ apiKey: key })
     return _anthropic
   } catch {
     return null

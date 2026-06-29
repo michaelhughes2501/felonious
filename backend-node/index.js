@@ -30,7 +30,7 @@ Resident.ensureTable().catch(err => console.warn('Could not create residents tab
 const publicDir = path.join(__dirname, 'public')
 if (fs.existsSync(publicDir)) {
   app.use(express.static(publicDir))
-  app.get('*', (req, res) => {
+  app.get('*splat', (req, res) => {
     // If the request is for the API but wasn't caught by routes, return 404
     if (req.originalUrl.startsWith('/api')) {
       return res.status(404).json({ error: 'API route not found' })
