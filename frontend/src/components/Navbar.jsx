@@ -43,11 +43,12 @@ const navStyle = ({ isActive }) => ({
 const styles = {
   nav: {
     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-    padding: '0 24px', height: '56px', background: '#1a1a2e', color: '#fff',
+    flexWrap: 'wrap', rowGap: '8px',
+    padding: '10px 24px', minHeight: '56px', background: '#1a1a2e', color: '#fff',
     position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 1px 4px rgba(0,0,0,.4)',
   },
   brand: { color: '#fff', textDecoration: 'none', fontSize: '18px', fontWeight: '700', letterSpacing: '1px' },
-  links: { display: 'flex', alignItems: 'center', gap: '16px' },
+  links: { display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '16px', rowGap: '8px' },
   link: { color: '#cdd', textDecoration: 'none', fontSize: '14px', paddingBottom: '2px' },
   btn: {
     background: 'transparent', border: '1px solid #aac', color: '#cdd',

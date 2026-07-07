@@ -34,6 +34,20 @@ CREATE TABLE IF NOT EXISTS connects (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Resident accounts (auth): backend-node/models/Resident.js also creates this table
+-- on server start via ensureTable() — kept here too so schema.sql stays the single
+-- source of truth per CLAUDE.md conventions.
+CREATE TABLE IF NOT EXISTS residents (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  handle VARCHAR(100) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  location VARCHAR(255),
+  bio TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Sample resources
 INSERT INTO kits (title, category, location, description, url) VALUES
   ('Transitional Housing Guide - Chicago', 'housing', 'Chicago, IL', 'Transitional housing and shelter resources for program participants', 'https://example.org'),
