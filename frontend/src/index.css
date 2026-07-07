@@ -23,3 +23,22 @@ button:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
+/* Small hover affordances for otherwise-inline-styled interactive elements. */
+.nh-card:hover {
+  border-color: #3b82d4;
+  box-shadow: 0 4px 14px rgba(59, 130, 212, 0.15);
+}
+
+.nh-tab:hover:not(.nh-tab-active) {
+  border-color: #3b82d4;
+  color: #3b82d4;
+}
+
+.nh-navlink:hover {
+  color: #fff;
+}
+
+.nh-btn-primary:hover:not(:disabled) {
+  background: #262649;
+}

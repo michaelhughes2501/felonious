@@ -26,6 +26,7 @@ export default function Commissary() {
       <div style={styles.tabs}>
         {CATEGORIES.map(c => (
           <button key={c} onClick={() => setCategory(c)}
+            className={`nh-tab${category === c ? ' nh-tab-active' : ''}`}
             style={{ ...styles.tab, ...(category === c ? styles.tabActive : {}) }}>
             {c === 'all' ? 'All' : c.replace('_', ' ')}
           </button>
