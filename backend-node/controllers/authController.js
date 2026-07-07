@@ -44,6 +44,15 @@ const authController = {
         })
       }
 
+      const existingHandle = await Resident.findByHandle(handle)
+      if (existingHandle) {
+        return res.status(409).json({
+          success: false,
+          data: null,
+          error: { code: 'HANDLE_TAKEN', message: 'An account with that handle already exists.' },
+        })
+      }
+
       const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
       const resident = await Resident.create({ handle, email, hashedPassword })
       const token = issueToken(resident)
