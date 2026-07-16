@@ -21,6 +21,16 @@ app.use(require('./routes/kits'))
 app.use(require('./routes/connects'))
 app.use(require('./routes/assistant'))
 app.use(require('./routes/items'))
+app.use('/api/integrations', require('./routes/integrations'))
+
+// Integrations panel — static HTML pages served from ./pages/ so they survive
+// `vite build` overwriting ./public.
+const pagesDir = path.join(__dirname, 'pages')
+app.get('/integrations', (_req, res) => res.sendFile(path.join(pagesDir, 'integrations.html')))
+app.get('/integrations/callback', (_req, res) => res.sendFile(path.join(pagesDir, 'integrations-callback.html')))
+app.get('/integrations.css', (_req, res) => res.sendFile(path.join(pagesDir, 'integrations.css')))
+app.get('/integrations.js', (_req, res) => res.sendFile(path.join(pagesDir, 'integrations.js')))
+app.get('/integrations-callback.js', (_req, res) => res.sendFile(path.join(pagesDir, 'integrations-callback.js')))
 
 // Ensure residents table exists (runs async, non-blocking)
 const Resident = require('./models/Resident')
