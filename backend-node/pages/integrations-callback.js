@@ -50,9 +50,14 @@ async function complete() {
     const data = await r.json();
     if (!r.ok) throw new Error(data.message || 'Token exchange failed.');
     saveTokens(pending.id, data);
-    // Whitelist returnTo to local same-origin paths.
+    // Whitelist returnTo to local same-origin paths. Chrome normalizes
+    // backslashes, so /\foo → //foo would be an open-redirect footgun.
     const returnTo = typeof pending.returnTo === 'string' ? pending.returnTo : '';
-    const safe = returnTo.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/integrations';
+    const safe = returnTo.startsWith('/')
+      && !returnTo.startsWith('//')
+      && !returnTo.startsWith('/\\')
+      ? returnTo
+      : '/integrations';
     window.location.replace(safe);
   } catch (e) {
     showError(e.message || String(e));

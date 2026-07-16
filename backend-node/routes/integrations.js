@@ -37,11 +37,13 @@ async function postToken(body) {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body,
   });
+  // Read as text first so we can still see the body if JSON.parse fails
+  // (fetch response bodies can only be consumed once).
+  const text = await response.text();
   let data;
   try {
-    data = await response.json();
+    data = JSON.parse(text);
   } catch {
-    const text = await response.text().catch(() => '');
     const err = new Error(`Invalid JSON from Google: ${text.slice(0, 200)}`);
     err.status = 502;
     throw err;

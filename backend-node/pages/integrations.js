@@ -91,7 +91,9 @@ async function refreshIfExpired() {
       if (r.ok) {
         const data = await r.json();
         saveTokens(p.id, { ...data, refreshToken: data.refreshToken || t.refreshToken });
-      } else {
+      } else if (r.status === 400 || r.status === 401) {
+        // Only forget tokens on explicit invalid_grant — transient
+        // 5xx / 429 should not force a full reconnect.
         clearTokens(p.id);
       }
     } catch { /* leave tokens; user can retry */ }
