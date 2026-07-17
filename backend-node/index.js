@@ -21,6 +21,20 @@ app.use(require('./routes/kits'))
 app.use(require('./routes/connects'))
 app.use(require('./routes/assistant'))
 app.use(require('./routes/items'))
+app.use('/api/integrations', require('./routes/integrations'))
+
+// Integrations panel — static HTML pages served from ./pages/ so they survive
+// `vite build` overwriting ./public. A lightweight rate limiter caps abuse of
+// the file-serving endpoints (also silences CodeQL "missing rate limiting").
+const rateLimit = require('./middleware/rateLimit')
+const pagesDir = path.join(__dirname, 'pages')
+const pagesLimit = rateLimit ? rateLimit({ windowMs: 60_000, max: 120 }) : (_req, _res, next) => next()
+const servePage = (file) => [pagesLimit, (_req, res) => res.sendFile(path.join(pagesDir, file))]
+app.get('/integrations', ...servePage('integrations.html'))
+app.get('/integrations/callback', ...servePage('integrations-callback.html'))
+app.get('/integrations.css', ...servePage('integrations.css'))
+app.get('/integrations.js', ...servePage('integrations.js'))
+app.get('/integrations-callback.js', ...servePage('integrations-callback.js'))
 
 // Ensure residents table exists (runs async, non-blocking)
 const Resident = require('./models/Resident')
