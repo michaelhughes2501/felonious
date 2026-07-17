@@ -14,19 +14,19 @@ export default function Navbar() {
     <nav style={styles.nav}>
       <Link to="/" style={styles.brand}>Felonious</Link>
       <div style={styles.links}>
-        <NavLink to="/yard" style={navStyle}>The Yard</NavLink>
-        <NavLink to="/commissary" style={navStyle}>Commissary</NavLink>
-        <NavLink to="/connects" style={navStyle}>Connections</NavLink>
-        <NavLink to="/clerk" style={navStyle}>The Clerk</NavLink>
+        <NavLink to="/yard" className="nh-navlink" style={navStyle}>The Yard</NavLink>
+        <NavLink to="/commissary" className="nh-navlink" style={navStyle}>Commissary</NavLink>
+        <NavLink to="/connects" className="nh-navlink" style={navStyle}>Connections</NavLink>
+        <NavLink to="/clerk" className="nh-navlink" style={navStyle}>The Clerk</NavLink>
         {resident ? (
           <>
-            <NavLink to="/profile" style={navStyle}>My Cell</NavLink>
-            <button onClick={handleLogout} style={styles.btn}>Sign Out</button>
+            <NavLink to="/profile" className="nh-navlink" style={navStyle}>My Cell</NavLink>
+            <button onClick={handleLogout} className="nh-navlink" style={styles.btn}>Sign Out</button>
           </>
         ) : (
           <>
-            <NavLink to="/login" style={navStyle}>Sign In</NavLink>
-            <NavLink to="/register" style={navStyle}>Register</NavLink>
+            <NavLink to="/login" className="nh-navlink" style={navStyle}>Sign In</NavLink>
+            <NavLink to="/register" className="nh-navlink" style={navStyle}>Register</NavLink>
           </>
         )}
       </div>
