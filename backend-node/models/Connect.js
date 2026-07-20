@@ -11,10 +11,10 @@ const ConnectModel = {
     return rows[0] || null
   },
 
-  async create(handle, location, released_date, bio, contact) {
+  async create(handle, location, released_date, bio, contact, createdBy) {
     const [result] = await db.query(
-      'INSERT INTO connects (handle, location, released_date, bio, contact) VALUES (?, ?, ?, ?, ?)',
-      [handle, location, released_date || null, bio, contact]
+      'INSERT INTO connects (handle, location, released_date, bio, contact, created_by) VALUES (?, ?, ?, ?, ?, ?)',
+      [handle, location, released_date || null, bio, contact, createdBy || null]
     )
     return result.insertId
   },
