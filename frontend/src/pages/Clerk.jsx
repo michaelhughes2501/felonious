@@ -71,7 +71,7 @@ export default function Clerk() {
           style={styles.input}
           disabled={sending}
         />
-        <button onClick={() => send()} disabled={sending || !input.trim()} style={styles.sendBtn}>
+        <button onClick={() => send()} disabled={sending || !input.trim()} className="nh-btn-primary" style={styles.sendBtn}>
           Send
         </button>
       </div>

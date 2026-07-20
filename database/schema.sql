@@ -10,6 +10,20 @@ CREATE TABLE IF NOT EXISTS items (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Resident accounts (mirrors backend-node/models/Resident.js, which creates
+-- this table itself on server start — declared here too so schema.sql stays
+-- the single source of truth for the full DB shape).
+CREATE TABLE IF NOT EXISTS residents (
+  id          INT AUTO_INCREMENT PRIMARY KEY,
+  handle      VARCHAR(100) NOT NULL UNIQUE,
+  email       VARCHAR(255) NOT NULL UNIQUE,
+  password    VARCHAR(255) NOT NULL,
+  location    VARCHAR(255),
+  bio         TEXT,
+  created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Resource records: housing, employment, wellness, legal, and general support by location
 CREATE TABLE IF NOT EXISTS kits (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -18,8 +32,10 @@ CREATE TABLE IF NOT EXISTS kits (
   location VARCHAR(255),
   description TEXT,
   url VARCHAR(500),
+  created_by INT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_kits_created_by FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL
 );
 
 -- Peer connections: approved resident profiles for supervised connection
@@ -30,23 +46,18 @@ CREATE TABLE IF NOT EXISTS connects (
   released_date DATE,
   bio TEXT,
   contact VARCHAR(255),
+  created_by INT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_connects_created_by FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL
 );
 
--- Resident accounts (auth): backend-node/models/Resident.js also creates this table
--- on server start via ensureTable() — kept here too so schema.sql stays the single
--- source of truth per CLAUDE.md conventions.
-CREATE TABLE IF NOT EXISTS residents (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  handle VARCHAR(100) NOT NULL UNIQUE,
-  email VARCHAR(255) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  location VARCHAR(255),
-  bio TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+-- Safe to re-run against a pre-existing database that predates the
+-- created_by ownership columns above (requires MySQL 8.0.29+).
+ALTER TABLE kits ADD COLUMN IF NOT EXISTS created_by INT NULL,
+  ADD CONSTRAINT IF NOT EXISTS fk_kits_created_by FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL;
+ALTER TABLE connects ADD COLUMN IF NOT EXISTS created_by INT NULL,
+  ADD CONSTRAINT IF NOT EXISTS fk_connects_created_by FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL;
 
 -- Sample resources
 INSERT INTO kits (title, category, location, description, url) VALUES

@@ -15,6 +15,7 @@ backend-flask/.env
 .env
 *.env
 *.env.bak
+*.bak
 
 # OS
 .DS_Store

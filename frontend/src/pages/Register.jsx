@@ -45,7 +45,7 @@ export default function Register() {
           <input name="email" type="email" value={form.email} onChange={handleChange} required style={styles.input} />
           <label style={styles.label}>Password</label>
           <input name="password" type="password" value={form.password} onChange={handleChange} required minLength={8} style={styles.input} />
-          <button type="submit" disabled={loading} style={styles.btn}>
+          <button type="submit" disabled={loading} className="nh-btn-primary" style={styles.btn}>
             {loading ? 'Creating account…' : 'Register'}
           </button>
         </form>

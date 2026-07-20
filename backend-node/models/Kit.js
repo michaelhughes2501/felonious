@@ -15,10 +15,10 @@ const KitModel = {
     return rows[0] || null
   },
 
-  async create(title, category, location, description, url) {
+  async create(title, category, location, description, url, createdBy) {
     const [result] = await db.query(
-      'INSERT INTO kits (title, category, location, description, url) VALUES (?, ?, ?, ?, ?)',
-      [title, category, location, description, url]
+      'INSERT INTO kits (title, category, location, description, url, created_by) VALUES (?, ?, ?, ?, ?, ?)',
+      [title, category, location, description, url, createdBy || null]
     )
     return result.insertId
   },

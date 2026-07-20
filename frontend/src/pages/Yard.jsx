@@ -27,7 +27,7 @@ export default function Yard() {
 
 function Card({ to, title, desc, icon }) {
   return (
-    <Link to={to} style={styles.card}>
+    <Link to={to} className="nh-card" style={styles.card}>
       <div style={styles.icon}>{icon}</div>
       <h3 style={styles.cardTitle}>{title}</h3>
       <p style={styles.cardDesc}>{desc}</p>

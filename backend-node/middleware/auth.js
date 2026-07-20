@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken')
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change-me-in-production'
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET is not set. Add it to backend-node/.env before starting the server.')
+}
 
 /**
  * requireAuth — verifies the Bearer token in Authorization header.
