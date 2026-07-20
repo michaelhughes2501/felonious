@@ -40,7 +40,7 @@ const kitController = {
     try {
       const existing = await KitModel.getById(req.params.id)
       if (!existing) return res.status(404).json({ success: false, data: null, meta: meta(), error: { code: 'NOT_FOUND', message: 'Resource not found.' } })
-      if (existing.created_by != null && existing.created_by !== req.resident.id) {
+      if (existing.created_by != null && existing.created_by != req.resident.id) {
         return res.status(403).json({ success: false, data: null, meta: meta(), error: { code: 'FORBIDDEN', message: 'You can only edit resources you created.' } })
       }
 
@@ -59,7 +59,7 @@ const kitController = {
     try {
       const existing = await KitModel.getById(req.params.id)
       if (!existing) return res.status(404).json({ success: false, data: null, meta: meta(), error: { code: 'NOT_FOUND', message: 'Resource not found.' } })
-      if (existing.created_by != null && existing.created_by !== req.resident.id) {
+      if (existing.created_by != null && existing.created_by != req.resident.id) {
         return res.status(403).json({ success: false, data: null, meta: meta(), error: { code: 'FORBIDDEN', message: 'You can only delete resources you created.' } })
       }
 

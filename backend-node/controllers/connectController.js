@@ -40,7 +40,7 @@ const connectController = {
     try {
       const existing = await ConnectModel.getById(req.params.id)
       if (!existing) return res.status(404).json({ success: false, data: null, meta: meta(), error: { code: 'NOT_FOUND', message: 'Peer not found.' } })
-      if (existing.created_by != null && existing.created_by !== req.resident.id) {
+      if (existing.created_by != null && existing.created_by != req.resident.id) {
         return res.status(403).json({ success: false, data: null, meta: meta(), error: { code: 'FORBIDDEN', message: 'You can only edit peer profiles you created.' } })
       }
 
@@ -59,7 +59,7 @@ const connectController = {
     try {
       const existing = await ConnectModel.getById(req.params.id)
       if (!existing) return res.status(404).json({ success: false, data: null, meta: meta(), error: { code: 'NOT_FOUND', message: 'Peer not found.' } })
-      if (existing.created_by != null && existing.created_by !== req.resident.id) {
+      if (existing.created_by != null && existing.created_by != req.resident.id) {
         return res.status(403).json({ success: false, data: null, meta: meta(), error: { code: 'FORBIDDEN', message: 'You can only delete peer profiles you created.' } })
       }
 

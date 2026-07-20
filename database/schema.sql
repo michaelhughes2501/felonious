@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS kits (
   created_by INT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL
+  CONSTRAINT fk_kits_created_by FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL
 );
 
 -- Peer connections: approved resident profiles for supervised connection
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS connects (
   created_by INT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL
+  CONSTRAINT fk_connects_created_by FOREIGN KEY (created_by) REFERENCES residents(id) ON DELETE SET NULL
 );
 
 -- Safe to re-run against a pre-existing database that predates the
