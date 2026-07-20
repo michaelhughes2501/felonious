@@ -62,7 +62,12 @@ const authController = {
         if (createErr.code === 'ER_DUP_ENTRY') {
           // The pre-checks above narrow the common case, but a concurrent
           // signup can still race past them and hit the DB constraint directly.
-          const isHandleConflict = /\bhandle\b/i.test(createErr.sqlMessage || '')
+          // Match only the constraint's key name (e.g. "residents.handle" or
+          // just "handle" depending on MySQL version) — not the whole message,
+          // which also contains the duplicate value and could contain "handle"
+          // as a substring of an email/handle that isn't actually the conflict.
+          const keyMatch = /for key '(?:[^'.]+\.)?(\w+)'/i.exec(createErr.sqlMessage || '')
+          const isHandleConflict = keyMatch ? keyMatch[1].toLowerCase() === 'handle' : false
           return res.status(409).json({
             success: false,
             data: null,
