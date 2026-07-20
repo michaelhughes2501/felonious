@@ -26,6 +26,10 @@ dist/
 dist-ssr/
 *.local
 
+# Stray debug/tooling artifacts — never commit local run logs
+*.log
+.bob/
+
 
 #Ignore vscode AI rules
 .github\instructions\codacy.instructions.md

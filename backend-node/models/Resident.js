@@ -25,6 +25,11 @@ const Resident = {
     return rows[0] || null
   },
 
+  async findByHandle(handle) {
+    const [rows] = await db.query('SELECT id, handle FROM residents WHERE handle = ? LIMIT 1', [handle])
+    return rows[0] || null
+  },
+
   async findById(id) {
     const [rows] = await db.query('SELECT id, handle, email, location, bio, created_at FROM residents WHERE id = ? LIMIT 1', [id])
     return rows[0] || null
