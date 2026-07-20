@@ -54,7 +54,26 @@ const authController = {
       }
 
       const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
-      const resident = await Resident.create({ handle, email, hashedPassword })
+
+      let resident
+      try {
+        resident = await Resident.create({ handle, email, hashedPassword })
+      } catch (createErr) {
+        if (createErr.code === 'ER_DUP_ENTRY') {
+          // The pre-checks above narrow the common case, but a concurrent
+          // signup can still race past them and hit the DB constraint directly.
+          const isHandleConflict = /\bhandle\b/i.test(createErr.sqlMessage || '')
+          return res.status(409).json({
+            success: false,
+            data: null,
+            error: isHandleConflict
+              ? { code: 'HANDLE_TAKEN', message: 'An account with that handle already exists.' }
+              : { code: 'EMAIL_TAKEN', message: 'An account with that email already exists.' },
+          })
+        }
+        throw createErr
+      }
+
       const token = issueToken(resident)
 
       return res.status(201).json({
