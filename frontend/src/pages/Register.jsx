@@ -39,12 +39,12 @@ export default function Register() {
         <h2 style={styles.h2}>Create Your Account</h2>
         {error && <p style={styles.err}>{error}</p>}
         <form onSubmit={handleSubmit}>
-          <label style={styles.label}>Handle (display name)</label>
-          <input name="handle" value={form.handle} onChange={handleChange} required style={styles.input} />
-          <label style={styles.label}>Email</label>
-          <input name="email" type="email" value={form.email} onChange={handleChange} required style={styles.input} />
-          <label style={styles.label}>Password</label>
-          <input name="password" type="password" value={form.password} onChange={handleChange} required minLength={8} style={styles.input} />
+          <label htmlFor="register-handle" style={styles.label}>Handle (display name)</label>
+          <input id="register-handle" name="handle" autoComplete="username" value={form.handle} onChange={handleChange} required style={styles.input} />
+          <label htmlFor="register-email" style={styles.label}>Email</label>
+          <input id="register-email" name="email" type="email" autoComplete="email" value={form.email} onChange={handleChange} required style={styles.input} />
+          <label htmlFor="register-password" style={styles.label}>Password</label>
+          <input id="register-password" name="password" type="password" autoComplete="new-password" value={form.password} onChange={handleChange} required minLength={8} style={styles.input} />
           <button type="submit" disabled={loading} className="nh-btn-primary" style={styles.btn}>
             {loading ? 'Creating account…' : 'Register'}
           </button>
