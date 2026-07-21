@@ -42,7 +42,7 @@ export default function Clerk() {
       <p style={styles.sub}>AI-assisted navigation, Kite drafting, and event reminders.</p>
       <p style={styles.disclaimer}>⚠️ The Clerk does not provide legal advice, therapy, or emergency services. All conversations are logged for safety.</p>
 
-      <div style={styles.chat}>
+      <div style={styles.chat} role="log" aria-live="polite" aria-label="Conversation with The Clerk">
         {messages.map((m, i) => (
           <div key={i} style={{ ...styles.bubble, ...(m.role === 'user' ? styles.user : styles.assistant) }}>
             <p style={styles.bubbleText}>{m.text}</p>
@@ -63,7 +63,9 @@ export default function Clerk() {
       </div>
 
       <div style={styles.inputRow}>
+        <label htmlFor="clerk-message" style={visuallyHidden}>Message to The Clerk</label>
         <input
+          id="clerk-message"
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()}
@@ -97,4 +99,11 @@ const styles = {
     padding: '10px 20px', background: '#1a1a2e', color: '#fff', border: 'none',
     borderRadius: '6px', cursor: 'pointer', fontWeight: '600', fontSize: '14px',
   },
+}
+
+// Visually hidden but still exposed to assistive tech (the input already has
+// a placeholder for sighted users, so this label is screen-reader only).
+const visuallyHidden = {
+  position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px',
+  overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0,
 }
