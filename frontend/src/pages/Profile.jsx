@@ -18,12 +18,22 @@ export default function Profile() {
     }
   }, [resident, loading, navigate])
 
-  if (loading || !profile) return <div style={styles.page}><p style={styles.muted}>Loading profile…</p></div>
+  if (loading) return <div style={styles.page}><p style={styles.muted}>Loading profile…</p></div>
+
+  if (err) {
+    return (
+      <div style={styles.page}>
+        <h2 style={styles.h2}>My Cell</h2>
+        <p style={styles.err}>{err}</p>
+      </div>
+    )
+  }
+
+  if (!profile) return <div style={styles.page}><p style={styles.muted}>Loading profile…</p></div>
 
   return (
     <div style={styles.page}>
       <h2 style={styles.h2}>My Cell</h2>
-      {err && <p style={styles.err}>{err}</p>}
       <div style={styles.card}>
         <div style={styles.avatar}>{profile.handle?.[0]?.toUpperCase() ?? '?'}</div>
         <h3 style={styles.handle}>{profile.handle}</h3>

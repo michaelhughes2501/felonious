@@ -3,6 +3,18 @@ import api from '../api/client'
 
 const CATEGORIES = ['all', 'housing', 'jobs', 'mental_health', 'legal', 'general']
 
+// Display labels match the platform slang used elsewhere (see AGENTS.md and
+// The Clerk's directions in assistantController.js) so a Resident who's told
+// to check "Commissary > Work Detail" actually finds a tab with that name.
+const CATEGORY_LABELS = {
+  all: 'All',
+  housing: 'Housing',
+  jobs: 'Work Detail',
+  mental_health: 'Rec Yard',
+  legal: 'Law Library',
+  general: 'General',
+}
+
 export default function Commissary() {
   const [kits, setKits] = useState([])
   const [category, setCategory] = useState('all')
@@ -28,7 +40,7 @@ export default function Commissary() {
           <button key={c} onClick={() => setCategory(c)}
             className={`nh-tab${category === c ? ' nh-tab-active' : ''}`}
             style={{ ...styles.tab, ...(category === c ? styles.tabActive : {}) }}>
-            {c === 'all' ? 'All' : c.replace('_', ' ')}
+            {CATEGORY_LABELS[c] ?? c.replace('_', ' ')}
           </button>
         ))}
       </div>
@@ -39,7 +51,7 @@ export default function Commissary() {
       <div style={styles.grid}>
         {kits.map(k => (
           <div key={k.id} style={styles.card}>
-            <span style={styles.badge}>{k.category}</span>
+            <span style={styles.badge}>{CATEGORY_LABELS[k.category] ?? k.category}</span>
             <h3 style={styles.title}>{k.title}</h3>
             {k.location && <p style={styles.location}>📍 {k.location}</p>}
             {k.description && <p style={styles.desc}>{k.description}</p>}
