@@ -35,10 +35,10 @@ export default function Login() {
         <h2 style={styles.h2}>Sign In</h2>
         {error && <p style={styles.err}>{error}</p>}
         <form onSubmit={handleSubmit}>
-          <label style={styles.label}>Email</label>
-          <input name="email" type="email" value={form.email} onChange={handleChange} required style={styles.input} />
-          <label style={styles.label}>Password</label>
-          <input name="password" type="password" value={form.password} onChange={handleChange} required style={styles.input} />
+          <label htmlFor="login-email" style={styles.label}>Email</label>
+          <input id="login-email" name="email" type="email" autoComplete="email" value={form.email} onChange={handleChange} required style={styles.input} />
+          <label htmlFor="login-password" style={styles.label}>Password</label>
+          <input id="login-password" name="password" type="password" autoComplete="current-password" value={form.password} onChange={handleChange} required style={styles.input} />
           <button type="submit" disabled={loading} className="nh-btn-primary" style={styles.btn}>
             {loading ? 'Signing in…' : 'Sign In'}
           </button>
