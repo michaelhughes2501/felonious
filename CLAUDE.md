@@ -46,7 +46,7 @@ felonious/
 │
 ├── frontend/                     # React + Vite SPA
 │   ├── index.html
-│   ├── vite.config.js            # proxies /api → http://localhost:5000 (Flask)
+│   ├── vite.config.js            # proxies /api → http://localhost:5001 (Node — see "Important Local Detail" below)
 │   └── src/
 │       ├── main.jsx
 │       ├── App.jsx               # React Router setup
@@ -93,13 +93,13 @@ npm run dev                # nodemon
 ```bash
 cd frontend
 npm install
-npm run dev                # proxies /api to Flask (port 5000)
-npm run build              # → dist/
+npm run dev                # proxies /api to the Node backend (port 5001) — Node has full kits/connects/items/auth coverage; Flask only implements /api/items
+npm run build              # → ../backend-node/public (served by the Node backend in production)
 npm run preview
 npm run lint               # ESLint
 ```
 
-To target the Node backend instead, edit the proxy target in `frontend/vite.config.js` to `http://localhost:5001`.
+To target the Flask backend instead, edit the proxy target in `frontend/vite.config.js` to `http://localhost:5000` — but note Flask doesn't implement `/api/kits`, `/api/connects`, or `/api/auth/*`, so most of the app will break against it until those routes are ported.
 
 ## Environment
 
